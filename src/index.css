@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@layer utilities {
+  :root {
+    /* Couleurs Nexus Web */
+    --color-nexus-dark: #0f172a;
+    --color-nexus-primary: #6366f1;
+    --color-nexus-secondary: #06b6d4;
+    --color-nexus-accent: #d946ef;
+
+    /* Couleurs pour les langages (comme sur la maquette) */
+    --color-html: #f97316;
+    --color-css: #3b82f6;
+    --color-js: #facc15;
+  }
+}
+
+/* Style de base pour le corps de la page */
+@layer base {
+  body {
+    background-color: #fff;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: var(--color-nexus-dark);
+      color: #fff;
+    }
+  }
+}
