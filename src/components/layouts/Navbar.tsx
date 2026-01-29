@@ -1,8 +1,8 @@
+
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { useUser } from '../../hooks/userUser';
 import { useEffect, useState } from 'react';
-
+import { useUser } from '../../hooks/useUser';
 const Navbar = () => {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -13,18 +13,24 @@ const Navbar = () => {
     const checkRank = async () => {
       if (!user) return;
 
-      // On récupère le top 3
-      const { data } = await supabase
-        .from('profiles')
-        .select('id')
-        .order('xp', { ascending: false })
-        .limit(3);
+      try {
+        // On récupère le top 3
+        const { data } = await supabase
+          .from('profiles')
+          .select('id')
+          .order('xp', { ascending: false })
+          .limit(3);
 
-      if (data) {
-        // On vérifie si l'ID de l'utilisateur est dans ce Top 3
-        const userPosition = data.findIndex(p => p.id === user.id);
-        if (userPosition !== -1) {
-          setRank(userPosition + 1); // Rang 1, 2 ou 3
+        if (data) {
+          // On vérifie si l'ID de l'utilisateur est dans ce Top 3
+          const userPosition = data.findIndex(p => p.id === user.id);
+          if (userPosition !== -1) {
+            setRank(userPosition + 1); // Rang 1, 2 ou 3
+          }
+        }
+      } catch (err: any) {
+        if (err.name !== 'AbortError') {
+          console.error('Rank check error:', err);
         }
       }
     };
@@ -33,8 +39,16 @@ const Navbar = () => {
   }, [user]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/');
+    try {
+      await supabase.auth.signOut();
+      navigate('/');
+    } catch (err: any) {
+      if (err.name !== 'AbortError') {
+        console.error('Logout error:', err);
+      }
+      // Still navigate even if logout fails
+      navigate('/');
+    }
   };
 
   const isActive = (path: string) => location.pathname === path;

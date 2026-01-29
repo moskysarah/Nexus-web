@@ -15,6 +15,37 @@
   }
 }
 
+
+/* Rotation lente de l'icône sur elle-même */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Flottement de haut en bas pour un effet "espace" */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(12deg); }
+  50% { transform: translateY(-30px) rotate(12deg); }
+}
+
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
+/* Apparition en fondu pour le badge supérieur */
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Style de base pour le corps de la page */
 @layer base {
   body {

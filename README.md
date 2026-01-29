@@ -1,77 +1,88 @@
+# 🚀 Nexus Web
 
-# React + TypeScript + Vite
+**Nexus Web** est une plateforme d’apprentissage dédiée aux bases du **développement web** :  
+👉 **HTML**, **CSS** et **JavaScript**.  
+Le projet a pour objectif d’aider les débutants à apprendre le web **pas à pas**, de manière **simple, pratique et accessible**.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## 📌 Objectifs du projet
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Apprendre les bases du développement web
+- Comprendre la structure des pages HTML
+- Styliser des interfaces avec CSS
+- Rendre les pages interactives grâce à JavaScript
+- Proposer un apprentissage progressif avec des exemples concrets
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Technologies utilisées
 
-## Expanding the ESLint configuration
+- **HTML5** – Structure des pages
+- **CSS3** – Mise en forme et design
+- **JavaScript** – Interactivité et logique
+<!-- - **Git & GitHub** – Gestion de versions -->
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📊 Rendu du Dashboard
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Le **dashboard Nexus Web** est conçu pour offrir une expérience d’apprentissage claire, intuitive et motivante.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 🎯 Objectifs du dashboard
+- Centraliser les cours (HTML, CSS, JavaScript)
+- Suivre la progression de l’apprenant
+- Accéder rapidement aux leçons et exercices
+- Proposer une interface simple et moderne
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 🧩 Sections principales du dashboard
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-=======
-# Nexus-web
->>>>>>> 85973ca01cdc44c9e4bd8dbb8c612039f8060c3a
+- 📚 **Cours disponibles**
+  - HTML (bases, balises, formulaires…)
+  - CSS (flexbox, grid, responsive design…)
+  - JavaScript (variables, fonctions, DOM…)
+
+- 📈 **Progression**
+  - Pourcentage d’avancement par module
+  - Leçons terminées / en cours
+
+- 📝 **Exercices pratiques**
+  - Exercices interactifs
+  - Mini-projets
+
+- 👤 **Profil utilisateur**
+  - Nom de l’apprenant
+  - Niveau actuel
+  - Historique d’apprentissage
+
+---
+
+### 🎨 Design & UX
+- Interface responsive (desktop & mobile)
+- Couleurs modernes et lisibles
+- Navigation simple et fluide
+- Mise en avant du contenu pédagogique
+
+---
+
+### 🖼️ Aperçu du dashboard
+
+> 📌 *Les captures d’écran du dashboard seront ajoutées prochainement.*
+
+```html
+<img src="src/assets/login nexus.png" alt="Dashboard Nexus Web" width="100%" />
+
+
+## 📂 Structure du projet
+
+```bash
+nexus-web/
+│
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── script.js
+└── README.md

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { useUser } from '../hooks/userUser';
+import { useUser } from '../hooks/useUser';
 
 const Profile = () => {
   const { user } = useUser();
@@ -20,16 +20,24 @@ const Profile = () => {
     setLoading(true);
     setMessage('');
 
-    const { error } = await supabase.auth.updateUser({
-      data: { full_name: fullName }
-    });
+    try {
+      const { error } = await supabase.auth.updateUser({
+        data: { full_name: fullName }
+      });
 
-    if (error) {
-      setMessage(`Erreur : ${error.message}`);
-    } else {
-      setMessage('Profil mis à jour avec succès !');
+      if (error) {
+        setMessage(`Erreur : ${error.message}`);
+      } else {
+        setMessage('Profil mis à jour avec succès !');
+      }
+    } catch (err: any) {
+      if (err.name !== 'AbortError') {
+        setMessage(`Erreur : ${err.message}`);
+        console.error('Profile update error:', err);
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

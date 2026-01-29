@@ -1,7 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Récupère les variables d'environnement (à créer dans un fichier .env)
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storageKey: 'nexus-auth-token' // Clé unique pour éviter les erreurs de lock
+  }
+});

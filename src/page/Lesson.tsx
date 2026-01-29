@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { useUser } from '../hooks/userUser';
+import { useUser } from '../hooks/useUser';
 import confetti from 'canvas-confetti';
 
 const LESSONS_CONTENT: any = {

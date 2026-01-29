@@ -12,6 +12,7 @@ import HtmlSemantic from './page/HtmlSemantic'
 import JsVariables from './page/JsVariables';
 import CssBasics from './page/CssBasic';
 import MessageReminder from './components/ui/MessageReminder';
+import Footer from './components/layouts/Footer';
 
 function App() {
   return (
@@ -95,6 +96,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/footer"
+        element={
+          <ProtectedRoute>
+            <Footer />
+          </ProtectedRoute> 
+
+        } 
+        />
+
       </Routes>
     </div>
   );
