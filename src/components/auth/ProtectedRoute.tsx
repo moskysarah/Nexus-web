@@ -1,20 +1,12 @@
 import { Navigate } from 'react-router-dom';
-import { useUser } from '../../hooks/useUser';
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useUser();
+export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  // CORRECTION : Utilise 'access_token' (le même nom que dans Auth.tsx)
+  const token = localStorage.getItem('access_token');
 
-  console.log("Auth State:", { user, loading }); // <--- AJOUTE CECI
-
-  if (loading) {
-    return <div className="text-white bg-black h-screen flex items-center justify-center">Chargement Nexus...</div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/signup" replace />;
+  if (!token) {
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
 };
-
-export default ProtectedRoute;

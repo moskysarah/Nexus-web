@@ -1,7 +1,7 @@
 # 🚀 Nexus Web
 
 **Nexus Web** est une plateforme d’apprentissage dédiée aux bases du **développement web** :  
-👉 **HTML**, **CSS** et **JavaScript**.  
+👉 **HTML**, **CSS**, **JavaScript** et  .  
 Le projet a pour objectif d’aider les débutants à apprendre le web **pas à pas**, de manière **simple, pratique et accessible**.
 
 ---
@@ -66,6 +66,13 @@ Le **dashboard Nexus Web** est conçu pour offrir une expérience d’apprentiss
 - Mise en avant du contenu pédagogique
 
 ---
+### 🎨 Library & Framework
+- React js  pour l'interface et l'experience utilisateur 
+- TailwindCSS pour la mise en forme et le design du site 
+- Typescript pour le typage 
+- Django (API REST) pour la récuperation de donnée des utilisateurs ,  récuperation de cours et points , l'authentification (login , signup)
+
+
 
 ### 🖼️ Aperçu du dashboard
 

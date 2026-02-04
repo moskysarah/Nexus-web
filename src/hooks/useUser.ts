@@ -1,41 +1,45 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import type { User } from '@supabase/supabase-js';
+// hooks/useUser.ts (ou context/UserContext.tsx)
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export const useUser = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    const checkSession = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (isMounted) {
-          setUser(session?.user ?? null);
-        }
-      } catch (err) {
-        console.error('Erreur session:', err);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
-
-    checkSession();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (isMounted) {
-        setUser(session?.user ?? null);
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem('access_token');
+      if (!token) {
         setLoading(false);
+        return;
       }
-    });
+      const response = await axios.get('http://127.0.0.1:8000/api/auth/me/', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setUser(response.data);
+    } catch (error) {
+      console.error("Erreur fetch user", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return () => {
-      isMounted = false;
-      subscription.unsubscribe();
-    };
+  useEffect(() => {
+    fetchUser();
   }, []);
 
-  return { user, loading };
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    setUser(null);
+  };
+
+  // --- ICI : On expose setUser et refreshUser ---
+  return { 
+    user, 
+    loading, 
+    logout, 
+    setUser, // Permet de modifier l'état localement
+    refreshUser: fetchUser // Permet de relancer une requête serveur
+  };
 };

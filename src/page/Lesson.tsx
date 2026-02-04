@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
 import { useUser } from '../hooks/useUser';
+import axios from 'axios'; // On remplace l'import Supabase par Axios
 import confetti from 'canvas-confetti';
 
 const LESSONS_CONTENT: any = {
@@ -13,7 +13,7 @@ const LESSONS_CONTENT: any = {
 const Lesson = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, setUser } = useUser(); // On récupère setUser pour mettre à jour l'UI après le gain d'XP
   const [loading, setLoading] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -23,6 +23,7 @@ const Lesson = () => {
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight === 0) return; 
       const progress = (window.scrollY / totalHeight) * 100;
       setScrollProgress(progress);
     };
@@ -36,10 +37,23 @@ const Lesson = () => {
     setLoading(true);
 
     try {
-      const { data } = await supabase.from('profiles').select('xp').eq('id', user.id).single();
-      const currentXP = data?.xp || 0;
+      const token = localStorage.getItem('access_token');
+      
+      // --- APPEL API DJANGO ---
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/auth/gain-xp/', 
+        { amount: 100 }, // On envoie 100 XP
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-      await supabase.from('profiles').update({ xp: currentXP + 100 }).eq('id', user.id);
+      // Mise à jour de l'état utilisateur local (pour que le Dashboard soit à jour direct)
+      if (setUser) {
+        setUser({
+          ...user,
+          xp: response.data.xp,
+          level: response.data.level
+        });
+      }
 
       // Effet de victoire !
       confetti({
@@ -49,9 +63,12 @@ const Lesson = () => {
         colors: ['#6366f1', '#a855f7', '#ffffff']
       });
 
+      // Retour au dashboard après la célébration
       setTimeout(() => navigate('/dashboard'), 2000);
+
     } catch (err) {
-      console.error(err);
+      console.error("Erreur Django:", err);
+      alert("Erreur lors de la sauvegarde de la progression.");
     } finally {
       setLoading(false);
     }
@@ -60,7 +77,7 @@ const Lesson = () => {
   return (
     <div className="min-h-screen bg-[#0a0a0c] pt-32 pb-20 px-6">
       
-      {/* BARRE DE PROGRESSION AU SCROLL (Collée sous la Navbar) */}
+      {/* BARRE DE PROGRESSION AU SCROLL */}
       <div className="fixed top-20 left-0 w-full h-1 bg-white/5 z-50">
         <div 
           className={`h-full transition-all duration-150 ease-out ${lesson.barColor}`}
@@ -70,9 +87,8 @@ const Lesson = () => {
 
       <div className="max-w-3xl mx-auto">
         
-        {/* Header dynamique */}
         <div className="mb-10 flex justify-between items-end">
-          <div>
+          <div className="text-left">
             <span className={`font-black text-xs uppercase tracking-[0.2em] ${lesson.color}`}>
               {lesson.lang} • Module 01
             </span>
@@ -84,14 +100,12 @@ const Lesson = () => {
           </div>
         </div>
 
-        {/* Zone de contenu */}
-        <div className="bg-[#121214] border border-gray-800 rounded-3xl p-8 mb-10 shadow-2xl relative overflow-hidden">
+        <div className="bg-[#121214] border border-gray-800 rounded-3xl p-8 mb-10 shadow-2xl relative overflow-hidden text-left">
           <div className="prose prose-invert text-gray-400 leading-relaxed text-lg">
             <p className="mb-8">{lesson.content}</p>
             
-            {/* Simulation de grand contenu pour tester le scroll */}
             <div className="space-y-8 opacity-50 italic text-sm">
-              <p>[...] Détails techniques approfondis sur le module {lesson.lang} [...]</p>
+              <p>Le développement web est un voyage constant. En maîtrisant {lesson.lang}, vous posez une pierre de plus à votre édifice de développeur Fullstack.</p>
               <p>Continuez à scroller pour terminer la lecture et débloquer vos points d'expérience.</p>
             </div>
 
@@ -101,10 +115,9 @@ const Lesson = () => {
           </div>
         </div>
 
-        {/* Bouton avec feedback visuel */}
         <button 
           onClick={handleComplete}
-          disabled={loading || scrollProgress < 90} // Optionnel: bloque tant qu'on a pas scrollé 90%
+          disabled={loading || scrollProgress < 90}
           className={`w-full font-black py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-3 ${
             scrollProgress >= 90 
             ? 'bg-white text-black hover:bg-gray-200' 
