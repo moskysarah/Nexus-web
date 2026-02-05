@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks/useUser';
-import axios from 'axios'; // On remplace l'import Supabase par Axios
+import axios from 'axios'; //  
 import confetti from 'canvas-confetti';
 
 const LESSONS_CONTENT: any = {
