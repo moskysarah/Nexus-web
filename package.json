@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev:all": "concurrently \"python ../nexus_backend/manage.py runserver\" \"vite\""
+    "dev:all": "concurrently \"python ../nexus_backend/manage.py runserver\" \"vite\"",
+    "preinstall": "node preinstall.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.91.1",

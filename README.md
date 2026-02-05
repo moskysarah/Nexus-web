@@ -76,10 +76,7 @@ Le **dashboard Nexus Web** est conçu pour offrir une expérience d’apprentiss
 
 ### 🖼️ Aperçu du dashboard
 
-> 📌 *Les captures d’écran du dashboard seront ajoutées prochainement.*
-
-```html
-<img src="src/assets/login nexus.png" alt="Dashboard Nexus Web" width="100%" />
+https://nexus-web-auth.onrender.com/
 
 
 ## 📂 Structure du projet
